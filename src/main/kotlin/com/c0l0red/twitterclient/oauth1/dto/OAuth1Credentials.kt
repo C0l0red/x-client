@@ -1,10 +1,12 @@
 package com.c0l0red.twitterclient.oauth1.dto
 
+import com.c0l0red.twitterclient.exceptions.InternalServerError
 import com.c0l0red.twitterclient.oauth1.algorithms.HashingAlgorithm
 import com.c0l0red.twitterclient.oauth1.algorithms.HmacSha1HashingAlgorithm
 import com.c0l0red.twitterclient.utils.Randoms
 import org.apache.catalina.util.URLEncoder
 import org.springframework.http.HttpMethod
+import java.net.URL
 import java.nio.charset.Charset
 import java.time.Instant
 import java.util.Base64
@@ -14,7 +16,7 @@ data class OAuth1Credentials(
     private val oauthConsumerKey: String,
     private val oauthConsumerSecret: String,
     private val httpMethod: HttpMethod,
-    private val url: String,
+    private var url: String,
     private val parameters: Map<String, String>,
     private val oauthTimestamp: String = Instant.now().epochSecond.toString(),
     private val oauthVersion: String = "1.0",
@@ -33,6 +35,7 @@ data class OAuth1Credentials(
         }
 
     init {
+        normalizeUrl()
         urlEncoder.addSafeCharacter('-')
         urlEncoder.addSafeCharacter('_')
         urlEncoder.addSafeCharacter('.')
@@ -62,6 +65,15 @@ data class OAuth1Credentials(
             append("oauth_version=\"${urlEncode(oauthVersion)}\",")
             append("oauth_signature=\"${urlEncode(oauthSignature)}\"")
         }
+    }
+
+    private fun normalizeUrl() {
+        val url = URL(url)
+        if (!url.query.isNullOrBlank()) throw InternalServerError("URL should not contain queries")
+
+        if (url.port == -1) return
+        if (url.defaultPort != url.port) return
+        else this.url = "${url.protocol}://${url.host}${url.path}"
     }
 
     private fun generateSignature(): String {
@@ -96,8 +108,5 @@ data class OAuth1Credentials(
     }
 
     private fun urlEncode(value: String?): String =
-        if (!value.isNullOrBlank())
-            urlEncoder.encode(value, Charset.forName("utf-8"))
-        else
-            ""
+        urlEncoder.encode(value ?: "", Charset.forName("utf-8"))
 }

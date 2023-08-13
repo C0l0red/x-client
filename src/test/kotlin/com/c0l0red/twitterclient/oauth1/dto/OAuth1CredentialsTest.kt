@@ -13,7 +13,7 @@ class OAuth1CredentialsTest {
     private val oauthConsumerSecret = "kAcSOqF21Fu85e7zjz7ZN2U4ZRhfV3WpwPAoE3Z7kBw"
     private val oauthSignatureMethod = HashingAlgorithm.Method.HmacSHA1
     private val httpMethod = HttpMethod.POST
-    private val url = "https://api.twitter.com/1.1/statuses/update.json"
+    private val url = "https://api.twitter.com:443/1.1/statuses/update.json"
     private val parameters = mapOf(
         Pair("include_entities", "true"),
         Pair("status", "Hello Ladies + Gentlemen, a signed OAuth request!")

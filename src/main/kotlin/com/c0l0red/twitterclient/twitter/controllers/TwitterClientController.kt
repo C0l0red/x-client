@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController("twitter/auth")
 class TwitterClientController(
-    private val OAuthService: OAuthService,
+    private val oAuthService: OAuthService,
 ) {
     @PostMapping("request-token")
     fun requestToken() {}

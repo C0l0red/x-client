@@ -10,8 +10,8 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.DefaultUriBuilderFactory
 
 @Service
-class OAuthServiceImpl() : OAuthService {
-    private val restTemplate: RestTemplate = RestTemplate();
+class OAuthServiceImpl : OAuthService {
+    private val restTemplate: RestTemplate = RestTemplate()
 
     init {
         restTemplate.uriTemplateHandler = DefaultUriBuilderFactory("https://api.twitter.com")
