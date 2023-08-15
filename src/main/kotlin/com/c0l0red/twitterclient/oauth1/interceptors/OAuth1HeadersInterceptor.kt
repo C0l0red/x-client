@@ -21,7 +21,7 @@ class OAuth1HeadersInterceptor(
         request: HttpRequest,
         body: ByteArray,
         execution: ClientHttpRequestExecution
-    ): ClientHttpResponse {
+    ): ClientHttpResponse { // TODO skip interception for some URLS
         val method: HttpMethod = request.method
         val url: URL = request.uri.toURL()
         val parameters = getParameters(request, body)

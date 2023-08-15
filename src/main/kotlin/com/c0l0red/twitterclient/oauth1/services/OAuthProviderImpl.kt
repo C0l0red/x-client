@@ -12,9 +12,14 @@ class OAuthProviderImpl(
     @Value("\${twitter.oauth1.0.consumer_secret}") override val consumerSecret: String,
     @Value("\${twitter.oauth1.0.callback_url}") override val callBackUrl: String,
 ) : OAuthProvider {
+    // TODO Make the signatureMethod come from the application.yaml
     override val signatureMethod: HashingAlgorithm.Method = HashingAlgorithm.Method.HmacSHA1
 
-    override fun generateCredentials(httpMethod: HttpMethod, urlPath: String, parameters: Map<String, String>): OAuth1Credentials {
+    override fun generateCredentials(
+        httpMethod: HttpMethod,
+        urlPath: String,
+        parameters: Map<String, String>
+    ): OAuth1Credentials {
         return OAuth1Credentials(
             signatureMethod,
             consumerKey,
