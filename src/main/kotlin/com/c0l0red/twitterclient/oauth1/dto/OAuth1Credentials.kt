@@ -9,7 +9,7 @@ import org.springframework.http.HttpMethod
 import java.net.URL
 import java.nio.charset.Charset
 import java.time.Instant
-import java.util.Base64
+import java.util.*
 
 data class OAuth1Credentials(
     private val oauthSignatureMethod: HashingAlgorithm.Method,

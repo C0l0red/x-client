@@ -9,7 +9,10 @@ interface OAuthProvider {
     val consumerKey: String
     val consumerSecret: String
     val callBackUrl: String
-    val verifier: String
 
-    fun generateCredentials(httpMethod: HttpMethod, urlPath: String, parameters: Map<String, String>): OAuth1Credentials
+    fun generateCredentials(
+        httpMethod: HttpMethod,
+        urlPath: String,
+        parameters: Map<String, String>
+    ): OAuth1Credentials
 }

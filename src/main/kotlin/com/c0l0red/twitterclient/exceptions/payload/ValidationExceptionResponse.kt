@@ -1,6 +1,6 @@
-package com.donah.simplixchange.exceptions.payload
+package com.c0l0red.twitterclient.exceptions.payload
 
-import java.util.Date
+import java.util.*
 
 class ValidationExceptionResponse(
     timestamp: Date,

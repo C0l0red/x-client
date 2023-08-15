@@ -1,5 +1,10 @@
+server:
+  port: 8085
+
 twitter:
   oauth1.0:
-    consumer_key: ${TWITTER_CONSUMER_KEY}
-    consumer_secret: ${TWITTER_CONSUMER_SECRET}
-    callback_url: ${TWITTER_CALLBACK_URL}
+    consumer_key: ${TWITTER_CONSUMER_KEY:poll}
+    consumer_secret: ${TWITTER_CONSUMER_SECRET:poll}
+    callback_url: ${TWITTER_CALLBACK_URL:poll}
+
+
