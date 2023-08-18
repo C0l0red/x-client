@@ -17,24 +17,35 @@ import java.net.URL
 class OAuth1HeadersInterceptor(
     private val oAuthProvider: OAuthProvider
 ): ClientHttpRequestInterceptor {
+
+    private val publicPaths = listOf(
+        "/oauth/authenticate",
+        "/oauth/authorize",
+        "/oauth/access_token",
+    )
+
     override fun intercept(
         request: HttpRequest,
         body: ByteArray,
         execution: ClientHttpRequestExecution
-    ): ClientHttpResponse { // TODO skip interception for some URLS
-        val method: HttpMethod = request.method
+    ): ClientHttpResponse {
         val url: URL = request.uri.toURL()
-        val parameters = getParameters(request, body)
 
-        val headersString = oAuthProvider.generateCredentials(
-            method,
-            url.toString(),
-            parameters,
-        ).asHeaderString()
-        request.headers.set(HttpHeaders.AUTHORIZATION, headersString)
+        if (!isPublicPath(url)) {
+            val method: HttpMethod = request.method
+            val parameters = getParameters(request, body)
 
+            val headersString = oAuthProvider.generateCredentials(
+                method,
+                url.toString(),
+                parameters,
+            ).asHeaderString()
+            request.headers.set(HttpHeaders.AUTHORIZATION, headersString)
+        }
         return execution.execute(request, body)
     }
+
+    private fun isPublicPath(url: URL): Boolean = publicPaths.contains(url.path)
 
     private fun getParameters(request: HttpRequest, body: ByteArray): Map<String, String> {
         val parameters = queryToMap(request.uri.toURL())

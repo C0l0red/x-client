@@ -3,7 +3,7 @@ package com.c0l0red.twitterclient.oauth1.dto
 import com.c0l0red.twitterclient.exceptions.InternalServerError
 import com.c0l0red.twitterclient.oauth1.algorithms.HashingAlgorithm
 import com.c0l0red.twitterclient.oauth1.algorithms.HmacSha1HashingAlgorithm
-import com.c0l0red.twitterclient.utils.Randoms
+import com.c0l0red.twitterclient.utils.generateAlphanumericString
 import org.apache.catalina.util.URLEncoder
 import org.springframework.http.HttpMethod
 import java.net.URL
@@ -20,7 +20,7 @@ data class OAuth1Credentials(
     private val parameters: Map<String, String>,
     private val oauthTimestamp: String = Instant.now().epochSecond.toString(),
     private val oauthVersion: String = "1.0",
-    private val oauthNonce: String = Randoms.generateAlphanumericString(15) + oauthTimestamp,
+    private val oauthNonce: String = generateAlphanumericString(15) + oauthTimestamp,
     private val oauthToken: String? = null,
     private val oauthTokenSecret: String? = null,
 ) {

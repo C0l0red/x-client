@@ -54,4 +54,16 @@ class OAuth1HeadersInterceptorTest {
             })
         verify(mockExecution, times(1)).execute(isA<HttpRequest>(), isA<ByteArray>())
     }
+
+    @Test
+    fun intercept_SkipsPublicPaths() {
+        whenever(request.uri).thenReturn(URI("http://test.com/oauth/authenticate?token=token"))
+        whenever(mockExecution.execute(isA<HttpRequest>(), isA<ByteArray>())).thenReturn(mockResponse)
+
+        oAuth1HeadersInterceptor.intercept(request, byteArrayOf(), mockExecution)
+
+        verifyNoInteractions(oAuth1Credentials)
+        verifyNoInteractions(oAuthProviderImpl)
+        verify(mockExecution, times(1)).execute(request, byteArrayOf())
+    }
 }
