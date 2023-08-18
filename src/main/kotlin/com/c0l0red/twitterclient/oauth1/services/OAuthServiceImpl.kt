@@ -6,12 +6,14 @@ import com.c0l0red.twitterclient.oauth1.dto.request.CreateRequestToken
 import com.c0l0red.twitterclient.oauth1.dto.response.AccessTokenResponse
 import com.c0l0red.twitterclient.oauth1.dto.response.RequestTokenResponse
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
 @Service
 class OAuthServiceImpl(
-    @Qualifier("OAuth 1.0") private val restTemplate: RestTemplate
+    @Qualifier("OAuth 1.0") private val restTemplate: RestTemplate,
+    @Value("\${twitter.oauth1.0.callback_url}") override val callBackUrl: String,
 ) : OAuthService {
 
     override fun requestToken(createRequestToken: CreateRequestToken): RequestTokenResponse {

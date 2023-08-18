@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component
 class OAuthProviderImpl(
     @Value("\${twitter.oauth1.0.consumer_key}") override val consumerKey: String,
     @Value("\${twitter.oauth1.0.consumer_secret}") override val consumerSecret: String,
-    @Value("\${twitter.oauth1.0.callback_url}") override val callBackUrl: String,
 ) : OAuthProvider {
     // TODO Make the signatureMethod come from the application.yaml
     override val signatureMethod: HashingAlgorithm.Method = HashingAlgorithm.Method.HmacSHA1

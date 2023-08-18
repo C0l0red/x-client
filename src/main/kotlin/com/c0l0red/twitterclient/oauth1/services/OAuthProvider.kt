@@ -8,7 +8,6 @@ interface OAuthProvider {
     val signatureMethod: HashingAlgorithm.Method
     val consumerKey: String
     val consumerSecret: String
-    val callBackUrl: String
 
     fun generateCredentials(
         httpMethod: HttpMethod,
