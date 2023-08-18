@@ -9,7 +9,6 @@ class OAuthProviderImplTest {
     private val oAuthProviderImpl: OAuthProvider =  OAuthProviderImpl(
         "consumerKey",
         "consumerSecret",
-        "callbackUrl"
     )
 
     @Test

@@ -43,14 +43,13 @@ data class OAuth1Credentials(
     }
 
     fun asForm(): Map<String, String> {
-        return mutableMapOf(
-            Pair("oauth_consumer_key", oauthConsumerKey),
-            Pair("oauth_signature_method", oauthSignatureMethod.upperCase),
-            Pair("oauth_nonce", oauthNonce),
-            Pair("oauth_version", oauthVersion),
-            Pair("oauth_signature", oauthSignature)
-        ).also {
-            if (!oauthToken.isNullOrBlank()) it["oauth_token"] = oauthToken
+        return buildMap {
+            put("oauth_consumer_key", oauthConsumerKey)
+            put("oauth_signature_method", oauthSignatureMethod.upperCase)
+            put("oauth_nonce", oauthNonce)
+            put("oauth_version", oauthVersion)
+            put("oauth_signature", oauthSignature)
+             if (!oauthToken.isNullOrBlank()) put("oauth_token", oauthToken)
         }
     }
 
@@ -90,16 +89,15 @@ data class OAuth1Credentials(
     }
 
     private fun generateParameterString(): String {
-        val parametersList: ArrayList<String> = arrayListOf(
-            "oauth_consumer_key=${urlEncode(oauthConsumerKey)}",
-            "oauth_nonce=${urlEncode(oauthNonce)}",
-            "oauth_signature_method=${urlEncode(oauthSignatureMethod.upperCase)}",
-            "oauth_timestamp=${urlEncode(oauthTimestamp)}",
-            "oauth_version=${urlEncode(oauthVersion)}",
-        ).also {
-            if (!oauthToken.isNullOrBlank()) it.add("oauth_token=${urlEncode(oauthToken)}")
-            it.addAll(parameters.map { (key, value) -> "${urlEncode(key)}=${urlEncode(value)}" })
-            it.sort()
+        val parametersList: List<String> = buildList {
+            add("oauth_consumer_key=${urlEncode(oauthConsumerKey)}")
+            add("oauth_nonce=${urlEncode(oauthNonce)}")
+            add("oauth_signature_method=${urlEncode(oauthSignatureMethod.upperCase)}")
+            add("oauth_timestamp=${urlEncode(oauthTimestamp)}")
+            add("oauth_version=${urlEncode(oauthVersion)}")
+            if (!oauthToken.isNullOrBlank()) add("oauth_token=${urlEncode(oauthToken)}")
+            addAll(parameters.map { (key, value) -> "${urlEncode(key)}=${urlEncode(value)}" })
+            sort()
         }
 
         return parametersList.toString()

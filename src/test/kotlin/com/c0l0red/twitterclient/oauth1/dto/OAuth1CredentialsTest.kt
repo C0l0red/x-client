@@ -2,9 +2,8 @@ package com.c0l0red.twitterclient.oauth1.dto
 
 import com.c0l0red.twitterclient.oauth1.algorithms.HashingAlgorithm
 import org.apache.catalina.util.URLEncoder
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.springframework.http.HttpMethod
 import java.nio.charset.Charset
 

@@ -45,7 +45,7 @@ class OAuth1HeadersInterceptor(
         return execution.execute(request, body)
     }
 
-    private fun isPublicPath(url: URL): Boolean = publicPaths.contains(url.path)
+    private fun isPublicPath(url: URL): Boolean = url.path in publicPaths
 
     private fun getParameters(request: HttpRequest, body: ByteArray): Map<String, String> {
         val parameters = queryToMap(request.uri.toURL())
